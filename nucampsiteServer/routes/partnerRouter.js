@@ -76,7 +76,7 @@ partnerRouter.route('/:partnerId')
     .catch(err => next(err));
 });
 
-partnerRouter.route('/:partnerId/comments')
+partnerRouter.route('/:partnerId')
 .get((req, res, next) => {
     Partner.findById(req.params.partnerId)
     .then(partner => {

@@ -17,7 +17,7 @@ partnerRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,(req, res, next) => {
+.post(authenticate. verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     Partner.create(req.body)
     .then(partner => {
         console.log('Partner Created ', partner);
@@ -31,7 +31,7 @@ partnerRouter.route('/')
     res.statusCode = 403;
     res.send('PUT operation not supported on /partners');
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate. verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     Partner.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -56,7 +56,7 @@ partnerRouter.route('/:partnerId')
     res.statusCode = 403;
     res.send(`POST operation not supported on /partner/${req.params.partnerId}`);
 })
-.put(authenticate.verifyUser,(req, res, next) => {
+.put(authenticate. verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     Partner.findByIdAndUpdate(req.params.partnerId, {
         $set: req.body
     }, { new: true })
@@ -67,7 +67,7 @@ partnerRouter.route('/:partnerId')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate. verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     Partner.findByIdAndDelete(req.params.partnerId)
     .then(response => {
         res.statusCode = 200;
@@ -77,7 +77,7 @@ partnerRouter.route('/:partnerId')
     .catch(err => next(err));
 });
 
-partnerRouter.route('/:partnerId')
+partnerRouter.route('/:partnerId/comments')
 .get((req, res, next) => {
     Partner.findById(req.params.partnerId)
     .then(partner => {
@@ -117,7 +117,7 @@ partnerRouter.route('/:partnerId')
     res.statusCode = 403;
     res.send(`PUT operation not supported on /partners/${req.params.partnerId}/comments`);
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate.verifyAdmin,(req, res, next) => {
     Partner.findByIdAndDelete(req.params.partnerId)
     .then(partner => {
         if (partner) {

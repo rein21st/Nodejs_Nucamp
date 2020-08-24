@@ -5,7 +5,19 @@ const authenticate = require('../authenticate');
 
 const router = express.Router();
 
+
 /* GET users listing. */
+
+router.get('/',authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    User.find()
+      .then(users => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(users);
+      })
+      .catch(err => next(err))
+  });
+
 router.post('/signup', (req, res) => {
     User.register(
         new User({username: req.body.username}),
@@ -59,5 +71,9 @@ router.get('/logout', (req, res, next) => {
       return next(err);
     }
 });
+
+
+
+
 
 module.exports = router;

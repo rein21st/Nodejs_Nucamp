@@ -1,7 +1,7 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const Campsite = require("../models/campsite");
-const authenticate = require("../authenticate");
+const express = require('express');
+const bodyParser = require('body-parser');
+const Campsite = require('../models/campsite');
+const authenticate = require('../authenticate');
 const cors = require('./cors');
 
 const campsiteRouter = express.Router();
